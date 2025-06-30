@@ -1,0 +1,178 @@
+<div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <div class="auth-container">
+    <div class="logo">
+      <h1>💰 WealthBuddy</h1>
+      <p>Your Personal Finance Companion</p>
+    </div>
+  
+    <div class="auth-tabs">
+      <button 
+        class="tab-button" 
+        [class.active]="currentTab === 'login'"
+        (click)="switchTab('login')"
+        [disabled]="isLoading">
+        Login
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="currentTab === 'register'"
+        (click)="switchTab('register')"
+        [disabled]="isLoading">
+        Register
+      </button>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+    
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  
+    <div class="form-container">
+      <div class="form-slide" [class.login]="currentTab === 'login'" [class.register]="currentTab === 'register'">
+        <div class="form-content">
+          
+          <!-- Login Form -->
+          <div class="login-form">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+              <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <input 
+                  type="text" 
+                  id="loginUsername" 
+                  formControlName="username"
+                  [class.error]="loginUsername?.invalid && loginUsername?.touched"
+                  required>
+                <div *ngIf="loginUsername?.invalid && loginUsername?.touched" class="field-error">
+                  Username is required
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  formControlName="password"
+                  [class.error]="loginPassword?.invalid && loginPassword?.touched"
+                  required>
+                <div *ngIf="loginPassword?.invalid && loginPassword?.touched" class="field-error">
+                  Password is required
+                </div>
+              </div>
+              
+              <button 
+                type="submit" 
+                class="submit-button" 
+                [disabled]="loginForm.invalid || isLoading">
+                <span *ngIf="isLoading && currentTab === 'login'" class="loading"></span>
+                {{ isLoading && currentTab === 'login' ? 'Processing...' : 'Sign In' }}
+              </button>
+            </form>
+          </div>
+  
+          <!-- Register Form -->
+          <div class="register-form">
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    formControlName="firstName"
+                    [class.error]="firstName?.invalid && firstName?.touched"
+                    required>
+                  <div *ngIf="firstName?.invalid && firstName?.touched" class="field-error">
+                    First name is required
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    formControlName="lastName"
+                    [class.error]="lastName?.invalid && lastName?.touched"
+                    required>
+                  <div *ngIf="lastName?.invalid && lastName?.touched" class="field-error">
+                    Last name is required
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="registerUsername">Username</label>
+                <input 
+                  type="text" 
+                  id="registerUsername" 
+                  formControlName="username"
+                  [class.error]="registerUsername?.invalid && registerUsername?.touched"
+                  required>
+                <div *ngIf="registerUsername?.invalid && registerUsername?.touched" class="field-error">
+                  <span *ngIf="registerUsername?.errors?.['required']">Username is required</span>
+                  <span *ngIf="registerUsername?.errors?.['minlength']">Username must be at least 3 characters</span>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email"
+                  [class.error]="email?.invalid && email?.touched"
+                  required>
+                <div *ngIf="email?.invalid && email?.touched" class="field-error">
+                  <span *ngIf="email?.errors?.['required']">Email is required</span>
+                  <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input 
+                  type="password" 
+                  id="registerPassword" 
+                  formControlName="password"
+                  [class.error]="registerPassword?.invalid && registerPassword?.touched"
+                  required>
+                <div *ngIf="registerPassword?.invalid && registerPassword?.touched" class="field-error">
+                  <span *ngIf="registerPassword?.errors?.['required']">Password is required</span>
+                  <span *ngIf="registerPassword?.errors?.['minlength']">Password must be at least 6 characters</span>
+                </div>
+                
+                <div class="password-strength" *ngIf="currentPassword">
+                  <div class="strength-bar">
+                    <div 
+                      class="strength-fill" 
+                      [ngClass]="passwordStrength.className"
+                      [style.width]="passwordStrength.width">
+                    </div>
+                  </div>
+                  <div class="strength-text">{{ passwordStrength.text }}</div>
+                </div>
+              </div>
+              
+              <button 
+                type="submit" 
+                class="submit-button" 
+                [disabled]="registerForm.invalid || isLoading">
+                <span *ngIf="isLoading && currentTab === 'register'" class="loading"></span>
+                {{ isLoading && currentTab === 'register' ? 'Processing...' : 'Create Account' }}
+              </button>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
