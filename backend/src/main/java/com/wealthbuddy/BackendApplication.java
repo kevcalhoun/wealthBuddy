@@ -1,4 +1,4 @@
-package com.wealthbuddy.backend;
+package com.wealthbuddy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

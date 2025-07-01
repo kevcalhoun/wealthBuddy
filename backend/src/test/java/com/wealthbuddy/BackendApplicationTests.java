@@ -1,4 +1,4 @@
-package com.wealthbuddy.backend;
+package com.wealthbuddy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
