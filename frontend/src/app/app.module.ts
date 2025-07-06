@@ -21,7 +21,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -29,11 +30,13 @@ import { AuthGuard } from './guards/auth.guard';
 // Services
 import { AuthService } from './services/auth.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent, 
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

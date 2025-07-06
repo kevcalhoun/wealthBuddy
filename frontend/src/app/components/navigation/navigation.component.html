@@ -1,0 +1,176 @@
+<!-- Side Navigation -->
+<nav class="sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-header">
+      <div class="logo-icon">💰</div>
+      <div class="logo-text">WealthBuddy</div>
+    </div>
+  
+    <div class="nav-menu">
+      <div class="nav-section">
+        <div class="nav-item" 
+             [class.active]="activeItem === 'dashboard'"
+             (click)="setActiveItem('dashboard')">
+          <i class="material-icons">dashboard</i>
+          <span class="nav-item-text">Dashboard</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'accounts'"
+             (click)="setActiveItem('accounts')">
+          <i class="material-icons">account_balance_wallet</i>
+          <span class="nav-item-text">Accounts</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'transactions'"
+             (click)="setActiveItem('transactions')">
+          <i class="material-icons">receipt_long</i>
+          <span class="nav-item-text">Transactions</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'cashflow'"
+             (click)="setActiveItem('cashflow')">
+          <i class="material-icons">trending_up</i>
+          <span class="nav-item-text">Cash Flow</span>
+        </div>
+      </div>
+  
+      <div class="nav-section">
+        <div class="nav-section-title">Planning</div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'reports'"
+             (click)="setActiveItem('reports')">
+          <i class="material-icons">assessment</i>
+          <span class="nav-item-text">Reports</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'budget'"
+             (click)="setActiveItem('budget')">
+          <i class="material-icons">pie_chart</i>
+          <span class="nav-item-text">Budget</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'recurring'"
+             (click)="setActiveItem('recurring')">
+          <i class="material-icons">repeat</i>
+          <span class="nav-item-text">Recurring</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'goals'"
+             (click)="setActiveItem('goals')">
+          <i class="material-icons">track_changes</i>
+          <span class="nav-item-text">Goals</span>
+        </div>
+      </div>
+  
+      <div class="nav-section">
+        <div class="nav-section-title">Grow</div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'investments'"
+             (click)="setActiveItem('investments')">
+          <i class="material-icons">show_chart</i>
+          <span class="nav-item-text">Investments</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'advice'"
+             (click)="setActiveItem('advice')">
+          <i class="material-icons">lightbulb</i>
+          <span class="nav-item-text">Advice</span>
+        </div>
+      </div>
+  
+      <div class="nav-section">
+        <div class="nav-item" 
+             [class.active]="activeItem === 'help'"
+             (click)="setActiveItem('help')">
+          <i class="material-icons">help</i>
+          <span class="nav-item-text">Help & Support</span>
+        </div>
+        <div class="nav-item" 
+             [class.active]="activeItem === 'settings'"
+             (click)="setActiveItem('settings')">
+          <i class="material-icons">settings</i>
+          <span class="nav-item-text">Settings</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="top-nav-left">
+      <button class="mobile-menu-button" (click)="toggleSidebar()">
+        <i class="material-icons">menu</i>
+      </button>
+      <h1 class="page-title">{{ pageTitle }}</h1>
+      <div class="breadcrumbs" *ngIf="breadcrumbs.length > 0">
+        <span *ngFor="let crumb of breadcrumbs; let last = last">
+          {{ crumb }}
+          <i class="material-icons" *ngIf="!last" style="font-size: 16px;">chevron_right</i>
+        </span>
+      </div>
+    </div>
+  
+    <div class="top-nav-right">
+        <button class="nav-button secondary" (click)="refreshData()">
+            <i class="material-icons">refresh</i>
+            Refresh all
+        </button>
+        <button class="nav-button primary" (click)="addAccount()">
+            <i class="material-icons">add</i>
+            Add account
+        </button>
+      
+        <div class="user-menu-container">
+            <div class="user-menu" (click)="toggleUserMenu()">
+            <div class="user-avatar">{{ userInitials }}</div>
+            <span class="user-name">{{ userName }}</span>
+            <i class="material-icons" 
+                [class.rotated]="userMenuOpen" 
+                style="font-size: 18px; color: #94a3b8;">expand_more</i>
+            </div>
+            
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" [class.show]="userMenuOpen">
+                <div class="user-dropdown-header">
+                    <div class="user-avatar-large">{{ userInitials }}</div>
+                    <div class="user-info">
+                    <div class="user-name-large">{{ userName }}</div>
+                    <div class="user-email">{{ userEmail }}</div>
+                    </div>
+                </div>
+                <div class="user-dropdown-divider"></div>
+                <div class="user-dropdown-items">
+                    <div class="dropdown-item" (click)="viewProfile()">
+                        <i class="material-icons">person</i>
+                        <span>View Profile</span>
+                    </div>
+                    <div class="dropdown-item" (click)="openSettings()">
+                        <i class="material-icons">settings</i>
+                        <span>Settings</span>
+                    </div>
+                    <div class="dropdown-item logout" (click)="logout()">
+                        <i class="material-icons">logout</i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
+  
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="content-header">
+      <h2 class="content-title">{{ contentTitle }}</h2>
+      <p class="content-subtitle" *ngIf="contentSubtitle">{{ contentSubtitle }}</p>
+    </div>
+  
+    <div class="content-body">
+      <ng-content></ng-content>
+    </div>
+  </main>
+  
+  <!-- Mobile Sidebar Overlay -->
+  <div class="sidebar-overlay" 
+       [class.show]="sidebarOpen" 
+       (click)="closeSidebar()">
+  </div>

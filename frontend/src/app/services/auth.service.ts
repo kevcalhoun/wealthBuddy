@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const TOKEN_KEY = 'accessToken';
 const USER_KEY = 'user';
@@ -50,7 +51,10 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar 
+  ) {}
 
   private hasToken(): boolean {
     return !!window.localStorage.getItem(TOKEN_KEY);
@@ -82,6 +86,14 @@ export class AuthService {
   logout(): void {
     window.localStorage.clear();
     this.isLoggedInSubject.next(false);
+
+    // Show success message
+    this.snackBar.open('Successfully logged out', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
   }
 
   saveToken(token: string): void {
