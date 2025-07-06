@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener, Input, OnDestroy } from '@angular/core
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 interface NavigationItem {
   id: string;
@@ -15,6 +17,7 @@ interface NavigationItem {
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
+
 export class NavigationComponent implements OnInit, OnDestroy {
   @Input() pageTitle: string = 'Dashboard';
   @Input() contentTitle: string = 'Welcome to WealthBuddy';
@@ -49,7 +52,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -175,11 +179,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
    */
   logout(): void {
     this.closeUserMenu();
-    this.authService.logout();
-    this.router.navigate(['/auth']);
     
-    // You can add a success message here
-    console.log('Successfully logged out');
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirm Logout',
+        message: 'Are you sure you want to logout of your session?',
+        confirmText: 'Yes, Logout',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.authService.logout();
+        this.router.navigate(['/auth']);
+        console.log('Successfully logged out');
+      }
+    });
   }
 
   /**
