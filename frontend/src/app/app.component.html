@@ -1,1 +1,15 @@
 <router-outlet />
+<!-- Show navigation only when user is logged in -->
+<app-navigation 
+  *ngIf="isLoggedIn"
+  [pageTitle]="currentPageTitle"
+  [contentTitle]="currentContentTitle" 
+  [contentSubtitle]="currentContentSubtitle"
+  [breadcrumbs]="currentBreadcrumbs">
+  
+  <router-outlet></router-outlet>
+  
+</app-navigation>
+
+<!-- Show router outlet directly when not logged in -->
+<router-outlet *ngIf="!isLoggedIn"></router-outlet>

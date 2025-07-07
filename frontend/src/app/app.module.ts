@@ -17,11 +17,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -29,11 +32,14 @@ import { AuthGuard } from './guards/auth.guard';
 // Services
 import { AuthService } from './services/auth.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent, 
+    NavigationComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,8 @@ import { AuthService } from './services/auth.service';
     MatToolbarModule,
     MatListModule,
     MatGridListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   providers: [
     AuthService,
